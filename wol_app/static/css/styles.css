@@ -5,41 +5,57 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #1e1e1e;
+    color: #cfcfcf;
 }
+
 .container {
-    background: #fff;
+    background: #333;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     max-width: 400px;
     width: 100%;
     text-align: center;
 }
+
 h1 {
     margin-bottom: 20px;
     font-size: 24px;
+    color: #ffffff;
 }
+
 label {
     display: block;
     text-align: left;
     margin-bottom: 8px;
     font-weight: bold;
+    color: #cfcfcf;
 }
-input {
+
+input, select {
     width: calc(100% - 20px);
     padding: 8px 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     border-radius: 4px;
+    background-color: #444;
+    color: #ffffff;
 }
-.error {
-    border: 1px solid red;
+
+input::placeholder {
+    color: #bbbbbb;
 }
+
+input.error {
+    border-color: red;
+}
+
 .error-message {
     color: red;
     margin-top: 20px;
 }
+
 button {
     background-color: #28a745;
     color: white;
@@ -49,13 +65,15 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
-button:hover {
+
+button:disabled {
+    background-color: grey;
+}
+
+button:hover:enabled {
     background-color: #218838;
 }
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
+
 .message {
     margin-top: 20px;
     font-size: 16px;
