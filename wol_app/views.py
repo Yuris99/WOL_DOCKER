@@ -21,9 +21,9 @@ def send_magic_packet(mac_address, ip_address, port):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         sock.sendto(magic_packet, (ip_address, port))
 
-def is_host_up(ip_address):
+def is_host_up(ip_address, timeout=5):
     # Ping the host to check if it is up
-    param = "-n 1" if platform.system().lower() == "windows" else "-c 1"
+    param = "-n 1 -w {}".format(timeout * 1000) if platform.system().lower() == "windows" else "-c 1 -W {}".format(timeout)
     response = os.system(f"ping {param} {ip_address}")
     return response == 0
 
@@ -55,19 +55,10 @@ def wake_and_check(request):
             # Check if the host is already up
             if is_host_up(ip_address):
                 return JsonResponse({'message': 'The computer is already on.', 'success': True})
-            
-            send_magic_packet(mac_address, ip_address, int(port))
-            message = 'Magic packet sent. Waiting for the computer to come online...'
-            
-            # Wait and check if the host is up
-            for i in range(1, 11):
-                time.sleep(5)  # Wait for 5 seconds
-                if is_host_up(ip_address):
-                    message = f'Host is up after {i * 5} seconds.'
-                    return JsonResponse({'message': message, 'success': True})
-            
-            message = 'Magic packet sent but the host is still down after 50 seconds.'
-            return JsonResponse({'message': message, 'success': False})
+            else:
+                # If ping fails, send WoL packet
+                send_magic_packet(mac_address, ip_address, int(port))
+                return JsonResponse({'message': 'Magic packet sent. Waiting for the computer to come online...', 'success': True})
         
         except (KeyError, json.JSONDecodeError):
             return JsonResponse({'message': 'Invalid data', 'success': False}, status=400)
@@ -102,4 +93,4 @@ def check_host_up(request):
     return JsonResponse({'message': 'Only POST method is allowed'}, status=405)
 
 def wake_on_lan_page(request):
-    return render(request, 'wake_on_lan.html')
+    return render(request, 'my_app/wake_on_lan.html')
