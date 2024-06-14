@@ -1,11 +1,14 @@
-version: '3'
+version: '3.8'
 
 services:
-  web:
-    build: .
+  django:
+    image: yuris127/wol_docker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:5050
     volumes:
-      - .:/app
+      - ./:/app
     ports:
       - "5050:5050"
     environment:
@@ -14,11 +17,11 @@ services:
       - db
 
   db:
-    image: postgres:13
+    image: postgres:latest
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: your_db_name
+      POSTGRES_USER: your_db_user
+      POSTGRES_PASSWORD: your_db_password
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 

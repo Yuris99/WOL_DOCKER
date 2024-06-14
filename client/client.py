@@ -26,7 +26,7 @@ def send_execution_result(sock, success):
     sock.sendall(json.dumps(result).encode('utf-8'))
 
 def main():
-    server_address = ('server_ip', 5051)  # 서버 IP와 포트
+    server_address = ('58.76.163.10', 5050)  # 서버 IP와 포트
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.connect(server_address)

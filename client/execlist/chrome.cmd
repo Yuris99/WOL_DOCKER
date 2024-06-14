@@ -1,0 +1,1 @@
+start C:\Users\mose1\AppData\Local\Google\Chrome\Application\chrome.exe

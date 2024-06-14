@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function checkHostStatus() {
         const ipAddress = ipAddressInput.value;
+        const macAddress = macAddressInput.value;
         let secondsWaited = 0;
 
         checkHostStatusTimer = setInterval(() => {
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
                 },
-                body: JSON.stringify({ ip_address: ipAddress })
+                body: JSON.stringify({ ip_address: ipAddress, mac_address: macAddress })
             })
             .then(response => response.json())
             .then(data => {
